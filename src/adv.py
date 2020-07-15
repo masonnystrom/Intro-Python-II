@@ -1,7 +1,8 @@
 from room import Room
+from player import Player
+import sys
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
@@ -20,10 +21,7 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
-
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -33,15 +31,29 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
 # Main
-#
+direction = ("n", "s", "w", "e")
+name = input("what is your name, adventurer?\n")
+print(f"Welcome {name}. You're a brave adventurer!")
+print(f"""in order play this game you'll need to select the direction you wish to move.
+        You're choices include North(n), South(s), East(e) or West(w)""")
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player({name}, room['outside'])
 
 # Write a loop that:
-#
-# * Prints the current room name
+while True:
+    print(f"your currently in {player.current_room} room")
+    print(room['outside'].description)
+    print("----------------------------")
+    player_choice = (input("Would you like to go North(n), South(s), East(e), West(w)"))
+    if player_choice == "n":
+        player.current_room == room['foyer']
+        print("onward")
+    elif player_choice == "q":
+        sys.exit()
+    else:
+        print("the cave beckons")
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
 #
