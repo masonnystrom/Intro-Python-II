@@ -32,32 +32,53 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Main
-direction = ("n", "s", "w", "e")
 name = input("what is your name, adventurer?\n")
-print(f"Welcome {name}. You're a brave adventurer!")
-print(f"""in order play this game you'll need to select the direction you wish to move.
-        You're choices include North(n), South(s), East(e) or West(w)""")
+
+print(f"Welcome {name}. You're a brave adventurer!\n")
+print(f"""in order play this game you'll need to select the direction you wish to move.\n
+You're choices include North(n), South(s), East(e), West(w), or quit(q)""")
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player({name}, room['outside'])
+player = Player({name}, room['outside'], [])
+print(f"your currently in {player.current_room} room\n")
+print(room['outside'].description)
 
+
+direction = ("n", "s", "w", "e", "q", "get", "drop")
 # Write a loop that:
-while True:
-    print(f"your currently in {player.current_room} room")
-    print(room['outside'].description)
+response = ""
+while response not in direction:
+
+    response = input("What direction would you like to go? ")
+
     print("----------------------------")
-    player_choice = (input("Would you like to go North(n), South(s), East(e), West(w)"))
-    if player_choice == "n":
-        player.current_room == room['foyer']
-        print("onward")
-    elif player_choice == "q":
-        sys.exit()
-    else:
-        print("the cave beckons")
-# * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
-#
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-#
-# If the user enters "q", quit the game.
+    #print(f"You're currently holding {player.inventory}")
+    print("----------------------------")
+
+    if response == "n":
+        if player.current_room == room['outside'] or room['narrow'] or room['foyer']:
+            player.move(response)
+            response = ""
+            print("----------------------------")
+        else:
+            print("That's not where adventure calls")
+            response = ""
+
+    elif response == "s":
+        player.move(response)
+        response = ""
+        print("----------------------------")
+
+    elif response == "e":
+        player.move(response)
+        response = ""
+        print("----------------------------")
+
+    elif response == "w":
+        player.move(response)
+        response = ""
+        print("----------------------------")
+
+    elif response == "q":
+        sys.exit("gg")
+        break
