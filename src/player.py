@@ -1,5 +1,8 @@
 # Write a class to hold player information, e.g. what room they are in
 # currently.
+from room import Room
+from item import Item
+
 class Player():
     """class for player that will move through the adventure game"""
     def __init__(self, name, current_room, inventory=[]):
@@ -16,12 +19,11 @@ class Player():
             self.current_room = new_spot
         print(f"{self.name} has moved to {self.current_room}")
 
-    def get_item(self, item):
-        if item not in self.inventory:
-            self.inventory.append(item)
-        print(f"{self.name} picked up the {item} from {self.current_room}.")
+    def get_item(self):
+        self.inventory.append(self.current_room.item)
+        print(f"{self.name} picked up the {self.inventory} from {self.current_room}.")
 
-    def drop_item(self, item):
-        if item in self.inventory:
-            self.inventory.remove(item)
-        print(f"{self.name} dropped the {item} from {self.current_room}.")
+    def drop_item(self, inventory):
+        if inventory in self.inventory:
+            self.inventory.remove(inventory)
+        print(f"{self.name} dropped the {inventory} from {self.current_room}.")

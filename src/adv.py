@@ -1,11 +1,12 @@
 from room import Room
 from player import Player
+from item import Item
 import sys
 
 # Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons", Item("axe", "it does what you think it does")),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -44,7 +45,7 @@ print(f"your currently in {player.current_room} room\n")
 print(room['outside'].description)
 
 
-direction = ("n", "s", "w", "e", "q", "get", "drop")
+direction = ("n", "s", "w", "e", "q", "g", "d")
 # Write a loop that:
 response = ""
 while response not in direction:
@@ -78,6 +79,18 @@ while response not in direction:
         player.move(response)
         response = ""
         print("----------------------------")
+
+    elif response == "g":
+        if player.current_room.get_item != []:
+            player.get_item()
+            print([item.name for item in player.inventory])
+            response = ""
+
+        else:
+            print("There's nothing in the room")
+
+    elif response == "i":
+        print(f"Player inventory:{player.inventory}")
 
     elif response == "q":
         sys.exit("gg")
